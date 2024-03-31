@@ -1,25 +1,29 @@
 import numpy as np
 
-############### SIMULATION SPECIFIC PARAMETERS ###############
-start_with_fixed_sf = False
-start_sf = 7
 
-scaling_factor = 0.1
+############### SIMULATION SPECIFIC PARAMETERS ###############
+start_with_fixed_sf = True
+start_sf = 12
+
+scaling_factor = 1
 transmission_rate_id = str(scaling_factor)
 transmission_rate_bit_per_ms = scaling_factor*(12*8)/(60*60*1000)  # 12*8 bits per hour (1 typical packet per hour)
 simulation_time = 24 * 60 * 60 * 1000 * 30/scaling_factor
-cell_size = 1000
-adr = True
-confirmed_messages = True
+cell_size = 10000
+adr = False
+confirmed_messages = False
 
-payload_sizes = range(5, 55, 5)
-path_loss_variances = [7.9]  # [0, 5, 7.8, 15, 20]
+#payload_sizes = [12]
+#path_loss_variances = [7.9]  # [0, 5, 7.8, 15, 20]
+
+payload_size = 12
+path_loss_variance = 0
 
 MAC_IMPROVEMENT = False
-num_locations = 50
-num_of_simulations = 1000
+num_locations = 2
+num_of_simulations = 2
 locations_file = "locations/"+"{}_locations_{}_sim.pkl".format(num_locations, num_of_simulations)
-results_file = "results/{}_{}_{}_cnst_num_bytes.p".format(adr, confirmed_messages, transmission_rate_id)
+results_file = "results/{}_{}_{}_{}_propagation.p".format(num_locations, payload_size, adr, confirmed_messages,)
 
 ############### SIMULATION SPECIFIC PARAMETERS ###############
 

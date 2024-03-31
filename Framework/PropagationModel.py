@@ -67,7 +67,7 @@ class COST231:
         # self.hb = hb
         # self.metropoliton_center = metropolitan_center
 
-        self.hb = None
+        self.hb = hb
         global Lori
         if fc < 800 or fc > 2000:
             ValueError('Carrier Frequency (in MHz) needs to be between 800 and 2000')
