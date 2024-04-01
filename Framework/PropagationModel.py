@@ -1,4 +1,7 @@
+import math
+
 import numpy as np
+
 
 class LogShadow:
 
@@ -164,3 +167,115 @@ class COST231:
         else:
             L50 = L0
         return tp_dBm - L50 - bpl
+
+
+class FreeSpace:
+    def __init__(self, fc):
+        self.fc = fc
+
+    def tp_to_rss(self, indoor: bool, tp_dBm: int, d: float):
+        if indoor:
+            ValueError('Free Space can not be used indoor!')
+
+        pl = 20 * np.log10((4 * math.pi * d) / (299.792458 / self.fc))
+        return tp_dBm - pl
+
+
+class Egli:
+    def __init__(self, fc):
+        self.fc = fc
+        self.beta = (40/fc)**2
+
+    def tp_to_rss(self, indoor: bool, tp_dBm: int, d: float):
+        if indoor:
+            ValueError('Egli can not be used indoor!')
+        # TODO: Create height as a gateway parameter?
+        height = 10
+        pl = -10 * np.log10(self.beta * (height * 2 / d ** 2) ** 2)
+        return tp_dBm - pl
+
+
+class OkumuraHata:
+    def __init__(self, fc, ht=2):
+        self.fc = fc
+        self.ht = ht
+        self.ahr = (1.1 * np.log10(self.fc) - 0.7) * self.ht - (1.56 * np.log10(self.fc) - 0.8)
+
+    def tp_to_rss(self, indoor: bool, tp_dBm: int, d: float):
+        # TODO: Create height as a gateway parameter?
+        height = 10
+
+        pl = 69.55 + 26.16 * np.log10(self.fc) - 13.82 * np.log10(height) - \
+             self.ahr + (44.9 - 6.55 * np.log10(height)) * np.log10(d/1000)
+        return tp_dBm - pl
+
+
+class COST231Hata:
+    def __init__(self, fc, ht=2):
+        self.fc = fc
+        self.ht = ht
+        self.ahr = (1.1 * np.log10(self.fc) - 0.7) * self.ht - (1.56 * np.log10(self.fc) - 0.8)
+
+
+    def tp_to_rss(self, indoor: bool, tp_dBm: int, d: float):
+        # TODO: Create height as a gateway parameter?
+        height = 10
+        A = 46.3 + 33.9 * np.log10(self.fc) - 13.28 * np.log10(height) - self.ahr
+        B = 44.9 - 6.55 * np.log10(self.ht)
+        C = 0
+        pl = A + B*np.log10(d/1000)+C
+        return tp_dBm - pl
+
+
+class DecisionTree:
+    def __init__(self, a):
+        self.a=a
+
+    def tp_to_rss(self, indoor: bool, tp_dBm: int, d: float):
+        pl = 0
+        return tp_dBm - pl
+
+
+class RandomForest:
+    def __init__(self, a):
+        self.a=a
+
+    def tp_to_rss(self, indoor: bool, tp_dBm: int, d: float):
+        pl = 0
+        return tp_dBm - pl
+
+
+class SVR:
+    def __init__(self, a):
+        self.a=a
+
+    def tp_to_rss(self, indoor: bool, tp_dBm: int, d: float):
+        pl = 0
+        return tp_dBm - pl
+
+
+class Lasso:
+    def __init__(self, a):
+        self.a=a
+
+    def tp_to_rss(self, indoor: bool, tp_dBm: int, d: float):
+        pl = 0
+        return tp_dBm - pl
+
+
+class XGBOOST:
+    def __init__(self, a):
+        self.a=a
+
+    def tp_to_rss(self, indoor: bool, tp_dBm: int, d: float):
+        pl = 0
+        return tp_dBm - pl
+
+
+class NeuralNetwork:
+    def __init__(self, a):
+        self.a=a
+
+    def tp_to_rss(self, indoor: bool, tp_dBm: int, d: float):
+        pl = 0
+        return tp_dBm - pl

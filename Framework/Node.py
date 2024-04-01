@@ -246,6 +246,7 @@ class Node:
         if not collided:
             if  PRINT_ENABLED:
                 print('{}: \t REC at BS'.format(self.id))
+                print('{}: \t RSS: {}'.format(self.id,packet.rss))
             downlink_message = self.base_station.packet_received(self, packet, self.env.now)
         else:
             self.num_collided += 1
