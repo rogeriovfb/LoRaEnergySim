@@ -1,7 +1,8 @@
 import math
 
 import numpy as np
-
+import joblib
+import zipfile
 
 class LogShadow:
 
@@ -228,54 +229,95 @@ class COST231Hata:
 
 
 class DecisionTree:
-    def __init__(self, a):
-        self.a=a
+    def __init__(self):
+        zf = zipfile.ZipFile("../../Framework/ML_Propagation_Models/mclab_tree.zip")
+        self.loaded_model = joblib.load(zf.open('mclab_tree.sav'))
+
 
     def tp_to_rss(self, indoor: bool, tp_dBm: int, d: float):
-        pl = 0
+        # TODO: Create height as a gateway parameter?
+        height = 10
+        # TODO: Create elevation as a node parameter
+        elevation = 10
+        print("Distance: {}".format(d))
+        pl = self.loaded_model.predict([[d/1000, height, elevation]])[0]
         return tp_dBm - pl
 
 
 class RandomForest:
-    def __init__(self, a):
-        self.a=a
+    def __init__(self):
+        zf = zipfile.ZipFile("../../Framework/ML_Propagation_Models/mclab_forest.zip")
+        self.loaded_model = joblib.load(zf.open('mclab_forest.sav'))
 
     def tp_to_rss(self, indoor: bool, tp_dBm: int, d: float):
-        pl = 0
+        # TODO: Create height as a gateway parameter?
+        height = 10
+        # TODO: Create elevation as a node parameter
+        elevation = 10
+        print("Distance: {}".format(d))
+        pl = self.loaded_model.predict([[d/1000, height, elevation]])[0]
         return tp_dBm - pl
 
 
 class SVR:
-    def __init__(self, a):
-        self.a=a
+    def __init__(self):
+        zf = zipfile.ZipFile("../../Framework/ML_Propagation_Models/mclab_svr_rbf.zip")
+        self.loaded_model = joblib.load(zf.open('mclab_svr_rbf.sav'))
 
     def tp_to_rss(self, indoor: bool, tp_dBm: int, d: float):
-        pl = 0
+        # TODO: Create height as a gateway parameter?
+        height = 10
+        # TODO: Create elevation as a node parameter
+        elevation = 10
+        print("Distance: {}".format(d))
+        pl = self.loaded_model.predict([[d/1000, height, elevation]])[0]
         return tp_dBm - pl
 
 
 class Lasso:
-    def __init__(self, a):
-        self.a=a
+    def __init__(self):
+        zf = zipfile.ZipFile("../../Framework/ML_Propagation_Models/mclab_lasso.zip")
+        self.loaded_model = joblib.load(zf.open('mclab_lasso.sav'))
 
     def tp_to_rss(self, indoor: bool, tp_dBm: int, d: float):
-        pl = 0
+        # TODO: Create height as a gateway parameter?
+        height = 10
+        # TODO: Create elevation as a node parameter
+        elevation = 10
+        print("Distance: {}".format(d))
+        pl = self.loaded_model.predict([[d/1000, height, elevation]])[0]
         return tp_dBm - pl
 
 
 class XGBOOST:
-    def __init__(self, a):
-        self.a=a
+    def __init__(self):
+        zf = zipfile.ZipFile("../../Framework/ML_Propagation_Models/mclab_xgboost.zip")
+        self.loaded_model = joblib.load(zf.open('mclab_xgboost.sav'))
 
     def tp_to_rss(self, indoor: bool, tp_dBm: int, d: float):
-        pl = 0
+        # TODO: Create height as a gateway parameter?
+        height = 10
+        # TODO: Create elevation as a node parameter
+        elevation = 10
+        print("Distance: {}".format(d))
+        pl = self.loaded_model.predict([[d/1000, height, elevation]])[0]
         return tp_dBm - pl
 
 
 class NeuralNetwork:
-    def __init__(self, a):
-        self.a=a
+    def __init__(self, fast: bool):
+        if fast:
+            zf = zipfile.ZipFile("../../Framework/ML_Propagation_Models/mclab_ann_small.zip")
+            self.loaded_model = joblib.load(zf.open('mclab_ann_small.sav'))
+        else:
+            zf = zipfile.ZipFile("../../Framework/ML_Propagation_Models/mclab_ann_best.zip")
+            self.loaded_model = joblib.load(zf.open('mclab_ann_best.sav'))
 
     def tp_to_rss(self, indoor: bool, tp_dBm: int, d: float):
-        pl = 0
-        return tp_dBm - pl
+        # TODO: Create height as a gateway parameter?
+        height = 10
+        # TODO: Create elevation as a node parameter
+        elevation = 10
+        print("Distance: {}".format(d))
+        pl = self.loaded_model.predict([[d/1000, height, elevation]])[0]
+        return tp_dBm - pl[0]

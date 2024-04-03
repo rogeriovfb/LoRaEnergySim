@@ -60,7 +60,7 @@ if __name__ == '__main__':
         'payload_sizes': payload_size,
     })
 
-    pool = mp.Pool(math.floor(mp.cpu_count() / 4))
+    pool = mp.Pool(math.floor(mp.cpu_count() /1))
 
     for n_sim in range(num_of_simulations):
         print(f'Simulation #{n_sim}')
@@ -72,7 +72,13 @@ if __name__ == '__main__':
                             PropagationModel.FreeSpace(fc=868),
                             PropagationModel.Egli(fc=868),
                             PropagationModel.OkumuraHata(fc=868),
-                            PropagationModel.COST231Hata(fc=868)
+                            PropagationModel.COST231Hata(fc=868),
+                            PropagationModel.DecisionTree(),
+                            PropagationModel.RandomForest(),
+                            PropagationModel.SVR(),
+                            PropagationModel.Lasso(),
+                            PropagationModel.XGBOOST(),
+                            PropagationModel.NeuralNetwork(fast=False)
                             ]
 
         for propagation in propagation_list:
