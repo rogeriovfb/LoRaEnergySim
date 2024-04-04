@@ -4,14 +4,16 @@ import numpy as np
 
 class Location:
 
-    def __init__(self, x=None, y=None, min=None, max=None, indoor=False):
+    def __init__(self, x=None, y=None, min=None, max=None, alt=None, alt_min=None, alt_max=None, indoor=False):
         self.x = x
         self.y = y
+        self.alt = alt
 
         if x is None or y is None:
             if min is not None and max is not None:
                 self.x = random.randint(min, max)
                 self.y = random.randint(min, max)
+                self.alt = random.randint(alt_min, alt_max)
             else:
                 raise ValueError('Define min and max or give x and y coordinates')
         self.indoor = indoor

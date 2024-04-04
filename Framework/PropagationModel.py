@@ -16,7 +16,7 @@ class LogShadow:
         self.Lpld0 = Lpld0
         self.GL = GL
 
-    def tp_to_rss(self, indoor: bool, tp_dBm: int, d: float):
+    def tp_to_rss(self, indoor: bool, tp_dBm: int, d: float, alt: int):
         bpl = 0  # building path loss
         if indoor:
             bpl = np.random.choice([17, 27, 21, 30])  # according Rep. ITU-R P.2346-0
@@ -140,7 +140,7 @@ class COST231:
         self.kf = kf
         self.b = b
 
-    def tp_to_rss(self, indoor: bool, tp_dBm: int, d: float):
+    def tp_to_rss(self, indoor: bool, tp_dBm: int, d: float, alt: int):
         bpl = 0  # building path loss
         if indoor:
             bpl = np.random.choice([17, 27, 21, 30])  # according Rep. ITU-R P.2346-0
@@ -174,7 +174,7 @@ class FreeSpace:
     def __init__(self, fc):
         self.fc = fc
 
-    def tp_to_rss(self, indoor: bool, tp_dBm: int, d: float):
+    def tp_to_rss(self, indoor: bool, tp_dBm: int, d: float, alt: int):
         if indoor:
             ValueError('Free Space can not be used indoor!')
 
@@ -187,7 +187,7 @@ class Egli:
         self.fc = fc
         self.beta = (40/fc)**2
 
-    def tp_to_rss(self, indoor: bool, tp_dBm: int, d: float):
+    def tp_to_rss(self, indoor: bool, tp_dBm: int, d: float, alt: int):
         if indoor:
             ValueError('Egli can not be used indoor!')
         # TODO: Create height as a gateway parameter?
@@ -202,7 +202,7 @@ class OkumuraHata:
         self.ht = ht
         self.ahr = (1.1 * np.log10(self.fc) - 0.7) * self.ht - (1.56 * np.log10(self.fc) - 0.8)
 
-    def tp_to_rss(self, indoor: bool, tp_dBm: int, d: float):
+    def tp_to_rss(self, indoor: bool, tp_dBm: int, d: float, alt: int):
         # TODO: Create height as a gateway parameter?
         height = 10
 
@@ -218,7 +218,7 @@ class COST231Hata:
         self.ahr = (1.1 * np.log10(self.fc) - 0.7) * self.ht - (1.56 * np.log10(self.fc) - 0.8)
 
 
-    def tp_to_rss(self, indoor: bool, tp_dBm: int, d: float):
+    def tp_to_rss(self, indoor: bool, tp_dBm: int, d: float, alt: int):
         # TODO: Create height as a gateway parameter?
         height = 10
         A = 46.3 + 33.9 * np.log10(self.fc) - 13.28 * np.log10(height) - self.ahr
@@ -234,13 +234,11 @@ class DecisionTree:
         self.loaded_model = joblib.load(zf.open('mclab_tree.sav'))
 
 
-    def tp_to_rss(self, indoor: bool, tp_dBm: int, d: float):
+    def tp_to_rss(self, indoor: bool, tp_dBm: int, d: float, alt: int):
         # TODO: Create height as a gateway parameter?
         height = 10
-        # TODO: Create elevation as a node parameter
-        elevation = 10
         print("Distance: {}".format(d))
-        pl = self.loaded_model.predict([[d/1000, height, elevation]])[0]
+        pl = self.loaded_model.predict([[d/1000, height, alt]])[0]
         return tp_dBm - pl
 
 
@@ -249,13 +247,11 @@ class RandomForest:
         zf = zipfile.ZipFile("../../Framework/ML_Propagation_Models/mclab_forest.zip")
         self.loaded_model = joblib.load(zf.open('mclab_forest.sav'))
 
-    def tp_to_rss(self, indoor: bool, tp_dBm: int, d: float):
+    def tp_to_rss(self, indoor: bool, tp_dBm: int, d: float, alt: int):
         # TODO: Create height as a gateway parameter?
         height = 10
-        # TODO: Create elevation as a node parameter
-        elevation = 10
         print("Distance: {}".format(d))
-        pl = self.loaded_model.predict([[d/1000, height, elevation]])[0]
+        pl = self.loaded_model.predict([[d/1000, height, alt]])[0]
         return tp_dBm - pl
 
 
@@ -264,13 +260,11 @@ class SVR:
         zf = zipfile.ZipFile("../../Framework/ML_Propagation_Models/mclab_svr_rbf.zip")
         self.loaded_model = joblib.load(zf.open('mclab_svr_rbf.sav'))
 
-    def tp_to_rss(self, indoor: bool, tp_dBm: int, d: float):
+    def tp_to_rss(self, indoor: bool, tp_dBm: int, d: float, alt: int):
         # TODO: Create height as a gateway parameter?
         height = 10
-        # TODO: Create elevation as a node parameter
-        elevation = 10
         print("Distance: {}".format(d))
-        pl = self.loaded_model.predict([[d/1000, height, elevation]])[0]
+        pl = self.loaded_model.predict([[d/1000, height, alt]])[0]
         return tp_dBm - pl
 
 
@@ -279,13 +273,11 @@ class Lasso:
         zf = zipfile.ZipFile("../../Framework/ML_Propagation_Models/mclab_lasso.zip")
         self.loaded_model = joblib.load(zf.open('mclab_lasso.sav'))
 
-    def tp_to_rss(self, indoor: bool, tp_dBm: int, d: float):
+    def tp_to_rss(self, indoor: bool, tp_dBm: int, d: float, alt: int):
         # TODO: Create height as a gateway parameter?
         height = 10
-        # TODO: Create elevation as a node parameter
-        elevation = 10
         print("Distance: {}".format(d))
-        pl = self.loaded_model.predict([[d/1000, height, elevation]])[0]
+        pl = self.loaded_model.predict([[d/1000, height, alt]])[0]
         return tp_dBm - pl
 
 
@@ -294,13 +286,11 @@ class XGBOOST:
         zf = zipfile.ZipFile("../../Framework/ML_Propagation_Models/mclab_xgboost.zip")
         self.loaded_model = joblib.load(zf.open('mclab_xgboost.sav'))
 
-    def tp_to_rss(self, indoor: bool, tp_dBm: int, d: float):
+    def tp_to_rss(self, indoor: bool, tp_dBm: int, d: float, alt: int):
         # TODO: Create height as a gateway parameter?
         height = 10
-        # TODO: Create elevation as a node parameter
-        elevation = 10
         print("Distance: {}".format(d))
-        pl = self.loaded_model.predict([[d/1000, height, elevation]])[0]
+        pl = self.loaded_model.predict([[d/1000, height, alt]])[0]
         return tp_dBm - pl
 
 
@@ -313,11 +303,9 @@ class NeuralNetwork:
             zf = zipfile.ZipFile("../../Framework/ML_Propagation_Models/mclab_ann_best.zip")
             self.loaded_model = joblib.load(zf.open('mclab_ann_best.sav'))
 
-    def tp_to_rss(self, indoor: bool, tp_dBm: int, d: float):
+    def tp_to_rss(self, indoor: bool, tp_dBm: int, d: float, alt: int):
         # TODO: Create height as a gateway parameter?
         height = 10
-        # TODO: Create elevation as a node parameter
-        elevation = 10
         print("Distance: {}".format(d))
-        pl = self.loaded_model.predict([[d/1000, height, elevation]])[0]
+        pl = self.loaded_model.predict([[d/1000, height, alt]])[0]
         return tp_dBm - pl[0]

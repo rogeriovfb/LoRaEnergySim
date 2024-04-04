@@ -185,7 +185,8 @@ class AirInterface:
         from_node = packet.node
         node_id = from_node.id
         rss = self.prop_model.tp_to_rss(from_node.location.indoor, packet.lora_param.tp,
-                                        Location.distance(self.gateway.location, packet.node.location))
+                                        Location.distance(self.gateway.location, packet.node.location),
+                                        from_node.location.alt)
         if node_id not in self.prop_measurements:
             self.prop_measurements[node_id] = {'rss': [], 'snr': [], 'time': []}
         packet.rss = rss
