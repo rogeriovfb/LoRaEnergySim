@@ -68,17 +68,17 @@ if __name__ == '__main__':
         args = []
 
         propagation_list = [PropagationModel.LogShadow(std=path_loss_variance),
-                            PropagationModel.COST231(fc=868),
+                            #PropagationModel.COST231(fc=868),
                             PropagationModel.FreeSpace(fc=868),
                             PropagationModel.Egli(fc=868),
                             PropagationModel.OkumuraHata(fc=868),
                             PropagationModel.COST231Hata(fc=868),
                             PropagationModel.DecisionTree(),
                             PropagationModel.RandomForest(),
-                            PropagationModel.SVR(),
-                            PropagationModel.Lasso(),
+                            #PropagationModel.SVR(),
+                            #PropagationModel.Lasso(),
                             PropagationModel.XGBOOST(),
-                            PropagationModel.NeuralNetwork(fast=False)
+                            #PropagationModel.NeuralNetwork(fast=True)
                             ]
 
         for propagation in propagation_list:
@@ -86,6 +86,7 @@ if __name__ == '__main__':
                              transmission_rate_bit_per_ms, confirmed_messages, adr, propagation))
 
         r_list = pool.map(func=SimulationProcess.run_helper, iterable=args)
+        #r_list = [SimulationProcess.run_helper(a) for a in args]
 
         for _r in r_list:
             if n_sim == 0:
