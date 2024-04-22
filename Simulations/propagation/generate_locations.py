@@ -10,7 +10,7 @@ locations_per_simulation = list()
 for num_sim in range(num_of_simulations):
     locations = list()
     for i in range(num_locations):
-        locations.append(Location(min=0, max=cell_size, alt_min=10, alt_max=60, indoor=False))
+        locations.append(Location(min=0, max=cell_size, alt_min=45, alt_max=90, indoor=False))
     locations_per_simulation.append(locations)
 
 
