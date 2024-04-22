@@ -20,7 +20,7 @@ payload_size = 12
 path_loss_variance = 0
 
 MAC_IMPROVEMENT = False
-num_locations = 10000
+num_locations = 100
 num_of_simulations = 1
 locations_file = "locations/"+"{}_locations_{}_sim.pkl".format(num_locations, num_of_simulations)
 results_file = "results/{}_{}_{}_{}_propagation.p".format(num_locations, payload_size, adr, confirmed_messages,)

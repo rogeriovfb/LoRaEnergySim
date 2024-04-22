@@ -232,13 +232,14 @@ class DecisionTree:
     def __init__(self):
         zf = zipfile.ZipFile("../../Framework/ML_Propagation_Models/mclab_tree.zip")
         self.loaded_model = joblib.load(zf.open('mclab_tree.sav'))
-
+        self.scaler = joblib.load('../../Framework/ML_Propagation_Models/mclab_scaler.sav')
 
     def tp_to_rss(self, indoor: bool, tp_dBm: int, d: float, alt: int):
         # TODO: Create height as a gateway parameter?
         height = 10
         print("Distance: {}".format(d))
-        pl = self.loaded_model.predict([[d/1000, height, alt]])[0]
+        input = self.scaler.fit_transform([[d/1000, height, alt]])
+        pl = self.loaded_model.predict(input)[0]
         return tp_dBm - pl
 
 
@@ -246,12 +247,14 @@ class RandomForest:
     def __init__(self):
         zf = zipfile.ZipFile("../../Framework/ML_Propagation_Models/mclab_forest.zip")
         self.loaded_model = joblib.load(zf.open('mclab_forest.sav'))
+        self.scaler = joblib.load('../../Framework/ML_Propagation_Models/mclab_scaler.sav')
 
     def tp_to_rss(self, indoor: bool, tp_dBm: int, d: float, alt: int):
         # TODO: Create height as a gateway parameter?
         height = 10
         print("Distance: {}".format(d))
-        pl = self.loaded_model.predict([[d/1000, height, alt]])[0]
+        input = self.scaler.fit_transform([[d/1000, height, alt]])
+        pl = self.loaded_model.predict(input)[0]
         return tp_dBm - pl
 
 
@@ -259,12 +262,14 @@ class SVR:
     def __init__(self):
         zf = zipfile.ZipFile("../../Framework/ML_Propagation_Models/mclab_svr_rbf.zip")
         self.loaded_model = joblib.load(zf.open('mclab_svr_rbf.sav'))
+        self.scaler = joblib.load('../../Framework/ML_Propagation_Models/mclab_scaler.sav')
 
     def tp_to_rss(self, indoor: bool, tp_dBm: int, d: float, alt: int):
         # TODO: Create height as a gateway parameter?
         height = 10
         print("Distance: {}".format(d))
-        pl = self.loaded_model.predict([[d/1000, height, alt]])[0]
+        input = self.scaler.fit_transform([[d/1000, height, alt]])
+        pl = self.loaded_model.predict(input)[0]
         return tp_dBm - pl
 
 
@@ -272,12 +277,14 @@ class Lasso:
     def __init__(self):
         zf = zipfile.ZipFile("../../Framework/ML_Propagation_Models/mclab_lasso.zip")
         self.loaded_model = joblib.load(zf.open('mclab_lasso.sav'))
+        self.scaler = joblib.load('../../Framework/ML_Propagation_Models/mclab_scaler.sav')
 
     def tp_to_rss(self, indoor: bool, tp_dBm: int, d: float, alt: int):
         # TODO: Create height as a gateway parameter?
         height = 10
         print("Distance: {}".format(d))
-        pl = self.loaded_model.predict([[d/1000, height, alt]])[0]
+        input = self.scaler.fit_transform([[d/1000, height, alt]])
+        pl = self.loaded_model.predict(input)[0]
         return tp_dBm - pl
 
 
@@ -285,12 +292,14 @@ class XGBOOST:
     def __init__(self):
         zf = zipfile.ZipFile("../../Framework/ML_Propagation_Models/mclab_xgboost.zip")
         self.loaded_model = joblib.load(zf.open('mclab_xgboost.sav'))
+        self.scaler = joblib.load('../../Framework/ML_Propagation_Models/mclab_scaler.sav')
 
     def tp_to_rss(self, indoor: bool, tp_dBm: int, d: float, alt: int):
         # TODO: Create height as a gateway parameter?
         height = 10
         print("Distance: {}".format(d))
-        pl = self.loaded_model.predict([[d/1000, height, alt]])[0]
+        input = self.scaler.fit_transform([[d/1000, height, alt]])
+        pl = self.loaded_model.predict(input)[0]
         return tp_dBm - pl
 
 
@@ -303,9 +312,12 @@ class NeuralNetwork:
             zf = zipfile.ZipFile("../../Framework/ML_Propagation_Models/mclab_ann_best.zip")
             self.loaded_model = joblib.load(zf.open('mclab_ann_best.sav'))
 
+        self.scaler = joblib.load('../../Framework/ML_Propagation_Models/mclab_scaler.sav')
+
     def tp_to_rss(self, indoor: bool, tp_dBm: int, d: float, alt: int):
         # TODO: Create height as a gateway parameter?
         height = 10
         print("Distance: {}".format(d))
-        pl = self.loaded_model.predict([[d/1000, height, alt]])[0]
+        input = self.scaler.fit_transform([[d/1000, height, alt]])
+        pl = self.loaded_model.predict(input)[0]
         return tp_dBm - pl[0]

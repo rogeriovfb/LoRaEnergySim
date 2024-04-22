@@ -68,7 +68,7 @@ if __name__ == '__main__':
         args = []
 
         propagation_list = [PropagationModel.LogShadow(std=path_loss_variance),
-                            #PropagationModel.COST231(fc=868),
+                            PropagationModel.COST231(fc=868),
                             PropagationModel.FreeSpace(fc=868),
                             PropagationModel.Egli(fc=868),
                             PropagationModel.OkumuraHata(fc=868),
