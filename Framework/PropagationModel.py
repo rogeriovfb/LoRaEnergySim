@@ -238,7 +238,7 @@ class DecisionTree:
         # TODO: Create height as a gateway parameter?
         height = 10
         print("Distance: {}".format(d))
-        input = self.scaler.fit_transform([[d/1000, height, alt]])
+        input = self.scaler.transform([[d/1000, height, alt]])
         pl = self.loaded_model.predict(input)[0]
         return tp_dBm - pl
 
@@ -253,7 +253,7 @@ class RandomForest:
         # TODO: Create height as a gateway parameter?
         height = 10
         print("Distance: {}".format(d))
-        input = self.scaler.fit_transform([[d/1000, height, alt]])
+        input = self.scaler.transform([[d/1000, height, alt]])
         pl = self.loaded_model.predict(input)[0]
         return tp_dBm - pl
 
@@ -268,7 +268,7 @@ class SVR:
         # TODO: Create height as a gateway parameter?
         height = 10
         print("Distance: {}".format(d))
-        input = self.scaler.fit_transform([[d/1000, height, alt]])
+        input = self.scaler.transform([[d/1000, height, alt]])
         pl = self.loaded_model.predict(input)[0]
         return tp_dBm - pl
 
@@ -283,7 +283,7 @@ class Lasso:
         # TODO: Create height as a gateway parameter?
         height = 10
         print("Distance: {}".format(d))
-        input = self.scaler.fit_transform([[d/1000, height, alt]])
+        input = self.scaler.transform([[d/1000, height, alt]])
         pl = self.loaded_model.predict(input)[0]
         return tp_dBm - pl
 
@@ -298,7 +298,7 @@ class XGBOOST:
         # TODO: Create height as a gateway parameter?
         height = 10
         print("Distance: {}".format(d))
-        input = self.scaler.fit_transform([[d/1000, height, alt]])
+        input = self.scaler.transform([[d/1000, height, alt]])
         pl = self.loaded_model.predict(input)[0]
         return tp_dBm - pl
 
@@ -318,6 +318,6 @@ class NeuralNetwork:
         # TODO: Create height as a gateway parameter?
         height = 10
         print("Distance: {}".format(d))
-        input = self.scaler.fit_transform([[d/1000, height, alt]])
+        input = self.scaler.transform([[d/1000, height, alt]])
         pl = self.loaded_model.predict(input)[0]
         return tp_dBm - pl[0]
