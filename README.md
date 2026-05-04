@@ -187,4 +187,32 @@ Simulator used in:
 - Stumpo, Daniele, Floriano De Rango, and Francesco Buffone. "Extending LoRaEnergySim Simulator to Support Interference Management under Multi-Gateway IoT Scenarios." (2022).
 - T. Fedullo, A. Morato, F. Tramarin, P. Ferrari and E. Sisinni, "Smart Measurement Systems Exploiting Adaptive LoRaWAN Under Power Consumption Constraints: a RL Approach," 2022 IEEE International Workshop on Metrology for Industry 4.0 & IoT (MetroInd4.0&IoT), Trento, Italy, 2022, pp. 354-359, doi: 10.1109/MetroInd4.0IoT54413.2022.9831487.
 
+## Extension in this fork
+
+This fork extends the original simulator with additional functionality related to intelligent propagation modeling.
+
+The implemented extensions are described and evaluated in the following publication:
+
+Ballestrin, R., Müller, I. (2026).  
+*Enhancing LoRa simulators with intelligent propagation modeling*.  
+Ad Hoc Networks, 186, 104202.  
+https://doi.org/10.1016/j.adhoc.2026.104202
+
+If you use these extended features, please cite:
+
+```bibtex
+@article{Ballestrin2026,
+  title = {Enhancing LoRa simulators with intelligent propagation modeling},
+  volume = {186},
+  ISSN = {1570-8705},
+  url = {http://dx.doi.org/10.1016/j.adhoc.2026.104202},
+  DOI = {10.1016/j.adhoc.2026.104202},
+  journal = {Ad Hoc Networks},
+  publisher = {Elsevier BV},
+  author = {Ballestrin, Rogério and Müller, Ivan},
+  year = {2026},
+  month = May,
+  pages = {104202}
+}
+```
 
